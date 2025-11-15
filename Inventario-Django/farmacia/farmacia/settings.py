@@ -55,7 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'farmacia.middleware.metrics.MetricsMiddleware',
+    # 'farmacia.middleware.metrics.MetricsMiddleware',
 ]
 
 ROOT_URLCONF = 'farmacia.urls'

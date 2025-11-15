@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-nhl#v+oclsu8o^7rl7i4dg7gr@$rt46s1yib*%s(_yhv0^6eu-'
 
-DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
+DEBUG = False
 # DEBUG = True
 ALLOWED_HOSTS = [".vercel.app", ".now.sh", '127.0.0.1', 'localhost']
 
@@ -55,7 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'farmacia.middleware.metrics.MetricsMiddleware',
+    'farmacia.middleware.metrics.MetricsMiddleware',
 ]
 
 ROOT_URLCONF = 'farmacia.urls'

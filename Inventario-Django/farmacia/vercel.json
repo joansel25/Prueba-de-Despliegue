@@ -2,12 +2,21 @@
     "builds": [{
       "src": "farmacia/wsgi.py",
       "use": "@vercel/python",
-      "config": { "maxLambdaSize": "15mb", "runtime": "python3.11.3" }
+      "config": { 
+        "maxLambdaSize": "15mb", 
+        "runtime": "python3.11.3"
+      }
     }],
     "routes": [
       {
         "src": "/(.*)",
         "dest": "farmacia/wsgi.py"
       }
-    ]
+    ],
+    "functions": {
+      "farmacia/wsgi.py": {
+        "memory": 1024,
+        "maxDuration": 30
+      }
+    }
 }

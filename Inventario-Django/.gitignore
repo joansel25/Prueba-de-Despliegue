@@ -1,0 +1,38 @@
+# Django #
+*.log
+*.pot
+*.pyc
+__pycache__/
+db.sqlite3
+*.sqlite3
+media/
+
+# Entorno virtual
+entorno/
+venv/
+.env
+
+# IDEs y editores
+.idea/
+.vscode/
+.history/
+
+# Distribución / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Tests y cachés
+.tox/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Archivos temporales
+*.bak
+*.tmp
+
+# Otros
+pip-log.txt
+celerybeat-schedule.*

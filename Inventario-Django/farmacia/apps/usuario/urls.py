@@ -5,6 +5,6 @@ from .views import *
 
 router = DefaultRouter()
 router.register(r'usuarios', UsuarioViewset, basename='usuario')
-router.register(r'roles', RolViewset, basename='usuario')
+router.register(r'roles', RolViewset, basename='roles')
 
 urlpatterns = router.urls

@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY') or get_random_secret_key()
 
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 # DEBUG = True
-ALLOWED_HOSTS = ['prueba-de-despliegue-wyj1.onrender.com', 'localhost', '127.0.0.1', '.onrender.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','.onrender.com']
 
 # Application definition
 
@@ -46,9 +46,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -179,8 +179,10 @@ SIMPLE_JWT = {
 
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # 👈 Tu frontend (Vite)
+    "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "http://localhost:3000",
+    'https://prueba-de-despliegue-wyj1.onrender.com',   
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -201,18 +203,17 @@ LOGGING = {
     },
 }
 if not DEBUG:
-    # Solo en producción
+
     SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
     SECURE_SSL_REDIRECT = True
 else:
-    # En desarrollo
     SECURE_SSL_REDIRECT = False
 
-# Siempre activas (desarrollo y producción)
-SESSION_COOKIE_SECURE = not DEBUG  # True en producción, False en desarrollo
-CSRF_COOKIE_SECURE = not DEBUG     # True en producción, False en desarrollo
+
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'

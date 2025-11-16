@@ -1,25 +1,43 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from .models import Usuario
+from .models import Usuario, Rol
 
 
-# 🔹 Serializer del modelo Usuario
+
+class RolSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rol
+        fields = '__all__'
+
+
+
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
         fields = '__all__'
+        extra_kwargs = {
+            "password": {"write_only": True}  
+        }
+
+   
+    def create(self, validated_data):
+        password = validated_data.pop("password", None)
+        user = Usuario(**validated_data)
+        if password:
+            user.set_password(password)
+        user.save()
+        return user
 
 
-# 🔹 Serializer personalizado para generar el token JWT
+
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
-    """
-    Serializer personalizado para añadir datos extras al token(JWT)
-    """
+    """Serializer personalizado para añadir datos extras al token JWT"""
+
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
 
-        # 🔸 Campos que se incluiran en el token
+
         token['username'] = user.username
         token['email'] = user.email
         token['telefono'] = user.telefono
@@ -30,12 +48,12 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
 
-        # 🔹 Estructura del  frontend
         data['user'] = {
-            'username': self.user.username,
-            'email': self.user.email,
-            'telefono': self.user.telefono,
-            'rol': self.user.rol.name if self.user.rol else None,
+            "id": self.user.id,
+            "username": self.user.username,
+            "email": self.user.email,
+            "telefono": self.user.telefono,
+            "rol": self.user.rol.name if self.user.rol else None,
         }
 
         return data

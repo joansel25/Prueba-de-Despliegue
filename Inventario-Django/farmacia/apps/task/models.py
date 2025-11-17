@@ -40,8 +40,9 @@ class Producto(TimeStampedModel):
 class Cliente(TimeStampedModel):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name="clientes")
     nombre = models.CharField(max_length=150)
-    correo = models.EmailField(unique=True)
-    telefono = models.CharField(max_length=20, unique=True)
+    telefono = models.CharField(max_length=20)
+    correo =models.EmailField(unique=True)
+   
 
     def __str__(self):
         return self.nombre
@@ -49,8 +50,7 @@ class Cliente(TimeStampedModel):
 class Empleado(TimeStampedModel):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name="empleados")
     nombre = models.CharField(max_length=150)
-    #correo = models.EmailField(unique=True)
-    telefono = models.CharField(max_length=20, unique=True)
+    telefono = models.CharField(max_length=20, null=True, blank=True) 
 
     def __str__(self):
         return self.nombre

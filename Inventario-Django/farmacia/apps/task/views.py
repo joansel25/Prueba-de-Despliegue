@@ -1,5 +1,5 @@
-"""ViewSets gestionamos operaciones CRUD con autenticaciÃ³n, 
-permisos y generaciÃ³n de PDFs."""
+"""ViewSets gestionamos operaciones CRUD con autenticacion, 
+permisos y generacion de PDFs."""
 
 from rest_framework import viewsets
 from .models import *

@@ -14,9 +14,9 @@ class UsuarioLegacy(models.Model):
     def __str__(self):
         return self.name
 
-class Usuario(AbstractUser ):
+class Usuario(AbstractUser ):             
     telefono = models.CharField(max_length=20, blank=True, null=True)
-    rol = models.ForeignKey(Rol, null=True, blank=True, on_delete=models.SET_NULL, related_name='usuarios')
+    rol = models.ForeignKey(Rol, null=True, blank=True, on_delete=models.SET_NULL, related_name='usuarios')#unique
     objects = UserManager()
 
     def __str__(self):

@@ -34,72 +34,22 @@ class ProveedorSerializer(serializers.ModelSerializer):
 
 
 class ClienteSerializer(serializers.ModelSerializer):
-    usuario = serializers.DictField(write_only=True)
+    usuario = serializers.PrimaryKeyRelatedField(
+        queryset=Usuario.objects.all()
+    )
 
     class Meta:
         model = Cliente
         fields = ['id', 'nombre', 'telefono', 'correo', 'usuario']
-
-    def create(self, validated_data):
-        usuario_data = validated_data.pop('usuario')
-
-        username = usuario_data.get('username')
-        password = usuario_data.get('password')
-
-        if not username or not password:
-            raise serializers.ValidationError(
-                {"usuario": "username y password son obligatorios"}
-            )
-
-        # Validar existencia del usuario
-        if Usuario.objects.filter(username=username).exists():
-            raise serializers.ValidationError(
-                {"usuario": "El username ya existe."}
-            )
-
-        rol_cliente, _ = Rol.objects.get_or_create(name='cliente')
-
-        # Crear usuario hijo
-        usuario = Usuario.objects.create_user(
-            username=username,
-            password=password,
-            rol=rol_cliente
-        )
-
-        # Crear cliente
-        cliente = Cliente.objects.create(
-            usuario=usuario,
-            nombre=validated_data["nombre"],
-            telefono=validated_data["telefono"],
-            correo=validated_data["correo"]
-        )
-
-        return cliente
-
-
-
 class EmpleadoSerializer(serializers.ModelSerializer):
-    usuario = serializers.DictField(write_only=True)
+    usuario = serializers.PrimaryKeyRelatedField(
+        queryset=Usuario.objects.all()
+    )
 
     class Meta:
         model = Empleado
         fields = ['id', 'nombre', 'telefono', 'usuario']
 
-    def create(self, validated_data):
-        usuario_data = validated_data.pop('usuario')
-        username = usuario_data.get('username')
-        if Usuario.objects.filter(username=username).exists():
-            raise serializers.ValidationError(
-                {"usuario": "El username ya existe."})
-
-        rol_empleado, _ = Rol.objects.get_or_create(name='empleado')
-        usuario = Usuario.objects.create_user(
-            username=username,
-            password=usuario_data.get('password'),
-            rol=rol_empleado
-        )
-        empleado = Empleado.objects.create(usuario=usuario, **validated_data)
-        return empleado
 
 
 # -----------------------------
